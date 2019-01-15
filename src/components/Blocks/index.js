@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Block, Span } from "./Block.styled";
 import { Alert } from "antd";
+import AddComment from "../AddComment";
 import "antd/dist/antd.css";
 
 class Blocks extends Component {
@@ -23,10 +24,9 @@ class Blocks extends Component {
     return (
       <Block>
         <Span>{this.props.res.title}</Span>
-        <Span>{this.props.res.type}</Span>
-        <Span>{this.props.res.comment}</Span>
         <Span>{this.handleCheckStatus()}</Span>
         <Span>{this.props.res.last_check}</Span>
+        <AddComment comment={this.props.res.comment} id={this.props.res.id} />
       </Block>
     );
   }
