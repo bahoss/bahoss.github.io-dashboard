@@ -7,4 +7,5 @@ export const Block = styled.div`
 `;
 export const Span = styled.span`
   display: iline-block;
+  font-size: 20px;
 `;
