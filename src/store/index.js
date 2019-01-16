@@ -3,8 +3,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import createSagaMiddleware from "redux-saga";
 
-import {reducer} from "../components/Router/reducer";
-import MySaga from "../components/Router/sagas";
+import {reducer} from "../entities/reducer";
+import rootSaga from "../entities/rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -14,4 +14,4 @@ export const store = createStore(
 
 );
 
-sagaMiddleware.run(MySaga);
+sagaMiddleware.run(rootSaga);

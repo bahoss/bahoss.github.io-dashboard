@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Comment, Form, Button, Input } from "antd";
 import {connect} from "react-redux";
-import {addComment} from "../Router/actions"
+import {addComment} from "../../entities/actions"
 
 const TextArea = Input.TextArea;
 
@@ -20,7 +20,7 @@ class AddComment extends Component {
   onSubmit = () => {
     const payload = {
       id: this.props.id,
-      body: this.state.comment
+      body: { comment: this.state.comment }
     }
     this.props.onSubmit(payload);
   };

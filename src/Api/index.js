@@ -30,7 +30,6 @@ function fetchGET(url) {
       accept: 'application/json',
     },
   };
-
   return request(url, options);
 }
 
@@ -43,7 +42,6 @@ function fetchPATCH(url, body) {
     },
     body: JSON.stringify(body),
   };
-
   return request(url, options);
 }
 const Api = {
@@ -52,11 +50,8 @@ const Api = {
     return fetchGET(url);
   },
   patchComent: ({ id, body }) => {
-    if (!id) throw new Error('Id is not defined');
-    const url = `${API_URL}{id}`;
+    const url = `${API_URL}${id}`;
     return fetchPATCH(url, body);
-  },
-
-  };
+  }  };
 
 export default Api;

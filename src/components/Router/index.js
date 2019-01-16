@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Blocks from "../Blocks";
 import { connect } from "react-redux";
-import {selectData} from "./selectors";
-import {getData} from "./actions";
+import {selectData} from "../../entities/selectors";
+import {getData} from "../../entities/actions";
+import {Wrapper} from "./Router.styled"
 
 class Router extends Component {
   getData = () => {
@@ -15,12 +16,16 @@ class Router extends Component {
     ))
   }
 
+  componentDidMount(){
+    this.props.getData()
+    setInterval(this.props.getData, 20000)
+  };
+
   render() {
     return(
-    <>
+    <Wrapper>
       {this.showData()}
-      <button onClick={this.getData}>Получить данные</button>
-    </>
+    </Wrapper>
   )
   }
 };
