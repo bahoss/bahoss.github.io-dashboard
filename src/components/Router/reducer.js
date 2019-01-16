@@ -9,7 +9,7 @@ export const reducer = (state = initialState, action) => {
     case DATA_FETCH_SUCCEEDED:
       return {
         ...state,
-        data: action.payload
+        data: action.data
       };
 
     default:

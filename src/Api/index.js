@@ -35,7 +35,7 @@ function fetchGET(url) {
 }
 const Api = {
   getAll: () => {
-    const url = `${API_URL}/orders`;
+    const url = `${API_URL}`;
     return fetchGET(url);
   },
 

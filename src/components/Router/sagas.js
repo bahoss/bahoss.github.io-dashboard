@@ -16,7 +16,7 @@ function* fetchData(action) {
   Позволяет одновременно получать данные пользователей.
 */
 function* mySaga() {
-  yield takeEvery("DATA_FETCH_REQUESTED", fetchData);
+  yield takeEvery("DATA_FETCH_SUCCEEDED", fetchData);
 }
 
 /*
