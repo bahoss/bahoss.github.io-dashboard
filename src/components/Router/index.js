@@ -9,17 +9,21 @@ class Router extends Component {
     this.props.getData();
   };
 
+  showData = () =>{
+    return this.props.dataItem.map(item => (
+      <Blocks key={item.id} res={item} />
+    ))
+  }
+
   render() {
     return(
     <>
-      {this.props.dataItem.map(item => (
-        <Blocks key={item.id} res={item} />
-      ))}
+      {this.showData()}
       <button onClick={this.getData}>Получить данные</button>
     </>
   )
   }
-}
+};
 
 const mapStateToProps = state => ({
   dataItem: selectData(state)

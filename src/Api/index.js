@@ -33,10 +33,28 @@ function fetchGET(url) {
 
   return request(url, options);
 }
+
+function fetchPATCH(url, body) {
+  const options = {
+    method: 'PATCH',
+    headers: {
+      'content-type': 'application/json',
+      accept: 'application/json',
+    },
+    body: JSON.stringify(body),
+  };
+
+  return request(url, options);
+}
 const Api = {
   getAll: () => {
     const url = `${API_URL}`;
     return fetchGET(url);
+  },
+  patchComent: ({ id, body }) => {
+    if (!id) throw new Error('Id is not defined');
+    const url = `${API_URL}{id}`;
+    return fetchPATCH(url, body);
   },
 
   };
