@@ -1,47 +1,39 @@
 import React, { Component } from "react";
 import Blocks from "../Blocks";
+import { connect } from "react-redux";
+import {selectData} from "./selectors";
+import {getData} from "./actions";
 
 class Router extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      items: []
-    };
-  }
-
-  componentDidMount() {
-    fetch("https://novaweb.studio/dashboard/_api/projects/")
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            isLoaded: true,
-            items: result
-          });
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        error => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      );
-  }
+  getData = () => {
+    this.props.getData();
+  };
 
   render() {
-    const { error, isLoaded, items } = this.state;
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      return items.map(item => <Blocks key={item.id} res={item} />);
-    }
+    return(
+    <>
+      {this.props.dataItem.map(item => (
+        <Blocks key={item.id} res={item} />
+      ))}
+      <button onClick={this.getData}>Получить данные</button>
+    </>
+  )
   }
 }
-export default Router;
+
+const mapStateToProps = state => ({
+  dataItem: selectData(state)
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getData: payload => {
+      dispatch(getData(payload));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Router);

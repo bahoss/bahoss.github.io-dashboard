@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Comment, Form, Button, List, Input } from "antd";
+import { Comment, Form, Button, Input } from "antd";
 
 const TextArea = Input.TextArea;
 
@@ -16,12 +16,13 @@ class AddComment extends Component {
   };
 
   onSubmit = () => {
-    fetch(`https://novaweb.studio/dashboard/_api/projects/ $(this.props.id)`, {
+    fetch(`https://novaweb.studio/dashboard/_api/projects/ ${this.props.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ comment: this.state.comment })
-    });
+    }).then(response => console.log(response));
   };
+
   render() {
     return (
       <>

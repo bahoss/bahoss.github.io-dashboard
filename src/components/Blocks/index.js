@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Block, Span } from "./Block.styled";
+import { Block, Span, LastCheck } from "./Block.styled";
 import { Alert } from "antd";
 import AddComment from "../AddComment";
 import "antd/dist/antd.css";
@@ -25,7 +25,7 @@ class Blocks extends Component {
       <Block>
         <Span>{this.props.res.title}</Span>
         <Span>{this.handleCheckStatus()}</Span>
-        <Span>{this.props.res.last_check}</Span>
+        <LastCheck>Последнее обновление:{this.props.res.last_check}</LastCheck>
         <AddComment comment={this.props.res.comment} id={this.props.res.id} />
       </Block>
     );
