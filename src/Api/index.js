@@ -1,4 +1,4 @@
-const API_URL = 'https://novaweb.studio/dashboard/_api/projects/';
+const API_URL = "https://novaweb.studio/dashboard/_api/projects/";
 
 function parseJSON(response) {
   if (response.status === 204 || response.status === 205) {
@@ -17,30 +17,41 @@ function checkStatus(response) {
   throw error;
 }
 
+function checkPosition(response) {
+  const positionFromLocalStorage = JSON.parse(localStorage.getItem("position"));
+  if (positionFromLocalStorage) {
+    return positionFromLocalStorage.map(position =>
+      response.find(i => i.id === position)
+    );
+  } else {
+    return response;
+  }
+}
 function request(url, options) {
   return fetch(url, options)
     .then(checkStatus)
-    .then(parseJSON);
+    .then(parseJSON)
+    .then(checkPosition);
 }
 
 function fetchGET(url) {
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      accept: 'application/json',
-    },
+      accept: "application/json"
+    }
   };
   return request(url, options);
 }
 
 function fetchPATCH(url, body) {
   const options = {
-    method: 'PATCH',
+    method: "PATCH",
     headers: {
-      'content-type': 'application/json',
-      accept: 'application/json',
+      "content-type": "application/json",
+      accept: "application/json"
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(body)
   };
   return request(url, options);
 }
@@ -52,6 +63,7 @@ const Api = {
   patchComent: ({ id, body }) => {
     const url = `${API_URL}${id}`;
     return fetchPATCH(url, body);
-  }  };
+  }
+};
 
 export default Api;

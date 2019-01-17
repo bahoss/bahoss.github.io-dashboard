@@ -5,9 +5,6 @@ import { selectData, selectPosition } from "../../Entities/Systems/selectors";
 import { getData, setPosition } from "../../Entities/Systems/actions";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-// fake data generator
-
-// a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -39,6 +36,7 @@ const getListStyle = isDraggingOver => ({
 class BlockList extends Component {
   componentDidMount() {
     this.props.getData();
+    console.log(this.positionFromLocalStorage);
     //setInterval(this.props.getData, 20000);
   }
 
@@ -53,8 +51,10 @@ class BlockList extends Component {
       result.source.index,
       result.destination.index
     );
-
     this.props.setPosition(items);
+
+    const position = items.map(a => a.id);
+    localStorage.setItem("position", JSON.stringify(position));
   };
 
   // Normally you would want to split things out into separate components.
