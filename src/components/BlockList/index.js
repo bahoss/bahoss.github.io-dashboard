@@ -17,49 +17,40 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const grid = 8;
-
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: "none",
-  padding: grid * 2,
-  margin: `0 ${grid}px 0 0`,
+  padding: 0,
+  margin: 0,
 
   // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
+  background: isDragging ? "lightgreen" : "#fff",
 
   // styles we need to apply on draggables
   ...draggableStyle
 });
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
+  background: isDraggingOver ? "lightblue" : "#fff",
   display: "flex",
-  padding: grid,
+  padding: 0,
   overflow: "auto"
 });
 
 class BlockList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: this.props.dataItem
-    };
-    this.onDragEnd = this.onDragEnd.bind(this);
-  }
   componentDidMount() {
     this.props.getData();
-    setInterval(this.props.getData, 20000);
+    //setInterval(this.props.getData, 20000);
   }
 
-  onDragEnd(result) {
+  onDragEnd = result => {
     // dropped outside the list
     if (!result.destination) {
       return;
     }
 
     const items = reorder(
-      this.state.items,
+      this.props.dataItem,
       result.source.index,
       result.destination.index
     );
@@ -67,7 +58,7 @@ class BlockList extends Component {
     this.setState({
       items
     });
-  }
+  };
 
   // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
@@ -81,7 +72,7 @@ class BlockList extends Component {
               style={getListStyle(snapshot.isDraggingOver)}
               {...provided.droppableProps}
             >
-              {this.state.items.map((item, index) => (
+              {this.props.dataItem.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
                     <div
@@ -93,7 +84,7 @@ class BlockList extends Component {
                         provided.draggableProps.style
                       )}
                     >
-                      {item.content}
+                      <Block key={item.id} res={item} />
                     </div>
                   )}
                 </Draggable>
