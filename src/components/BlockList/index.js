@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import Block from "../Block";
 import { connect } from "react-redux";
-import { selectData } from "../../Entities/Systems/selectors";
-import { getData } from "../../Entities/Systems/actions";
-import { Wrapper } from "./BlockList.styled";
+import { selectData, selectPosition } from "../../Entities/Systems/selectors";
+import { getData, setPosition } from "../../Entities/Systems/actions";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 // fake data generator
@@ -50,14 +49,12 @@ class BlockList extends Component {
     }
 
     const items = reorder(
-      this.props.dataItem,
+      this.props.positionItem,
       result.source.index,
       result.destination.index
     );
 
-    this.setState({
-      items
-    });
+    this.props.setPosition(items);
   };
 
   // Normally you would want to split things out into separate components.
@@ -99,13 +96,18 @@ class BlockList extends Component {
 }
 
 const mapStateToProps = state => ({
-  dataItem: selectData(state)
+  dataItem: selectData(state),
+  positionItem: selectPosition(state)
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     getData: payload => {
       dispatch(getData(payload));
+    },
+
+    setPosition: payload => {
+      dispatch(setPosition(payload));
     }
   };
 };
