@@ -7,8 +7,7 @@ import {
 } from "./actions";
 
 const initialState = {
-  data: [],
-  position: []
+  data: []
 };
 
 export const reducer = (state = initialState, action) => {
@@ -38,7 +37,7 @@ export const reducer = (state = initialState, action) => {
     case SET_BLOCK_POSITION:
       return {
         ...state,
-        position: action.payload
+        data: action.payload
       };
 
     default:

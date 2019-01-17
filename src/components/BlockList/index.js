@@ -49,7 +49,7 @@ class BlockList extends Component {
     }
 
     const items = reorder(
-      this.props.positionItem,
+      this.props.dataItem,
       result.source.index,
       result.destination.index
     );
