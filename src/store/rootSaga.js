@@ -1,6 +1,6 @@
 import { fork } from 'redux-saga/effects';
 import fetchSaga from '../components/Router/sagas';
-import patchSaga from '../components/AddComment/sagas';
+import patchSaga from '../components/Comments/sagas';
 
 export default function* rootSaga() {
     yield [

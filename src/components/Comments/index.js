@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Comment, Form, Button, Input } from "antd";
 import {connect} from "react-redux";
-import {addComment} from "../../entities/actions"
+import {addComment} from "../../Entities/Systems/actions"
 
 const TextArea = Input.TextArea;
 
-class AddComment extends Component {
+class Comments extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,4 +47,4 @@ const mapDispatchToProps = dispatch =>{
   }
 
 };
-export default connect(null, mapDispatchToProps)(AddComment);
+export default connect(null, mapDispatchToProps)(Comments);

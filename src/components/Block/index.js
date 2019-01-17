@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Block, Span, LastCheck } from "./Block.styled";
+import { Wrapper, Span, LastCheck } from "./Block.styled";
 import { Alert } from "antd";
-import AddComment from "../AddComment";
+import Comments from "../Comments";
 import "antd/dist/antd.css";
 
-class Blocks extends Component {
+class Block extends Component {
   handleCheckStatus = () => {
     if (
       this.props.res.type === "website" &&
@@ -22,14 +22,14 @@ class Blocks extends Component {
   };
   render() {
     return (
-      <Block>
+      <Wrapper>
         <Span>{this.props.res.title}</Span>
         <Span>{this.handleCheckStatus()}</Span>
         <LastCheck>Последнее обновление:{this.props.res.last_check}</LastCheck>
-        <AddComment comment={this.props.res.comment} id={this.props.res.id} />
-      </Block>
+        <Comments comment={this.props.res.comment} id={this.props.res.id} />
+      </Wrapper>
     );
   }
 }
 
-export default Blocks;
+export default Block;
