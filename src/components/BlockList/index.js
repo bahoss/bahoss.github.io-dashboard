@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Block from "../Block";
+import { Wrapper } from "./BlockList.styled";
 import { connect } from "react-redux";
 import { selectData, selectPosition } from "../../Entities/Systems/selectors";
 import { getData, setPosition } from "../../Entities/Systems/actions";
@@ -36,8 +37,7 @@ const getListStyle = isDraggingOver => ({
 class BlockList extends Component {
   componentDidMount() {
     this.props.getData();
-
-    //setInterval(this.props.getData, 20000);
+    setInterval(this.props.getData, 20000);
   }
 
   onDragEnd = result => {
@@ -61,10 +61,36 @@ class BlockList extends Component {
     const positionFromLocalStorage = JSON.parse(
       localStorage.getItem("position")
     );
-    if (positionFromLocalStorage) {
+    if (positionFromLocalStorage === null) {
+      return response;
+    } else if (positionFromLocalStorage.length === response.length) {
       return positionFromLocalStorage.map(position =>
         response.find(i => i.id === position)
       );
+    } else if (positionFromLocalStorage.length !== response.length) {
+      const getId = response.map(a => a.id);
+      const checkId = (arr1, arr2) => {
+        var arr = [];
+        arr1 = arr1
+          .toString()
+          .split(",")
+          .map(Number);
+        arr2 = arr2
+          .toString()
+          .split(",")
+          .map(Number);
+
+        for (var i in arr1) {
+          if (arr2.indexOf(arr1[i]) === -1) arr.push(arr1[i]);
+        }
+
+        return arr;
+      };
+      const newId = checkId(getId, positionFromLocalStorage);
+      console.log(newId);
+      const newPosition = positionFromLocalStorage.concat(newId);
+      localStorage.setItem("position", JSON.stringify(newPosition));
+      return newPosition.map(position => response.find(i => i.id === position));
     } else {
       return response;
     }
@@ -73,37 +99,43 @@ class BlockList extends Component {
   // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
   render() {
+    if (this.props.dataItem.length === 0) {
+      return "Загрузка...";
+    }
+    const reorderedList = this.checkPosition(this.props.dataItem);
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
-        <Droppable droppableId="droppable" direction="horizontal">
-          {(provided, snapshot) => (
-            <div
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-              {...provided.droppableProps}
-            >
-              {this.props.dataItem.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
-                    >
-                      <Block key={item.id} res={item} />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <Wrapper>
+        <DragDropContext onDragEnd={this.onDragEnd}>
+          <Droppable droppableId="droppable" direction="horizontal">
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                style={getListStyle(snapshot.isDraggingOver)}
+                {...provided.droppableProps}
+              >
+                {reorderedList.map((item, index) => (
+                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={getItemStyle(
+                          snapshot.isDragging,
+                          provided.draggableProps.style
+                        )}
+                      >
+                        <Block key={item.id} res={item} />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </Wrapper>
     );
   }
 }
