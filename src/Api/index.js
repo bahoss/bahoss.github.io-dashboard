@@ -17,21 +17,10 @@ function checkStatus(response) {
   throw error;
 }
 
-function checkPosition(response) {
-  const positionFromLocalStorage = JSON.parse(localStorage.getItem("position"));
-  if (positionFromLocalStorage) {
-    return positionFromLocalStorage.map(position =>
-      response.find(i => i.id === position)
-    );
-  } else {
-    return response;
-  }
-}
 function request(url, options) {
   return fetch(url, options)
     .then(checkStatus)
-    .then(parseJSON)
-    .then(checkPosition);
+    .then(parseJSON);
 }
 
 function fetchGET(url) {
