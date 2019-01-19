@@ -19,7 +19,6 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: "none",
   padding: 0,
   margin: 0,
-
   // change background colour if dragging
   background: isDragging ? "lightgreen" : "#fff",
 
@@ -37,7 +36,7 @@ const getListStyle = isDraggingOver => ({
 class BlockList extends Component {
   componentDidMount() {
     this.props.getData();
-    setInterval(this.props.getData, 20000);
+    //setInterval(this.props.getData, 20000);
   }
 
   onDragEnd = result => {

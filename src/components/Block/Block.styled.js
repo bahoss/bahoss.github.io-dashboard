@@ -13,8 +13,9 @@ export const Wrapper = styled.div`
 export const Span = styled.span`
   display: iline-block;
   font-size: 20px;
+  height: 60px;
 `;
 
 export const LastCheck = styled.span`
-  font-size: 16px;
+  font-size: 14px;
 `;
