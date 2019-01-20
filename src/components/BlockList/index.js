@@ -36,7 +36,7 @@ const getListStyle = isDraggingOver => ({
 class BlockList extends Component {
   componentDidMount() {
     this.props.getData();
-    //setInterval(this.props.getData, 20000);
+    setInterval(this.props.getData, 20000);
   }
 
   onDragEnd = result => {
